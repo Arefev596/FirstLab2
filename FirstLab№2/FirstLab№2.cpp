@@ -1,81 +1,62 @@
 ﻿#include <iostream>
 #include <vector>
+#include <time.h>
 
 using namespace std;
 
-class Viewer;
-class PlayersTruck;
 
 class Player {
 public:
-    Player(string m_name) : name(m_name) {};
-    friend class Viewer;
-    friend class Play;
-protected:
+    Player() {}
+
+    Player(string m_name) : name(m_name) {}
+    string getName() {
+        return name;
+    }
+    int getScore() {
+        return score;
+    }
+    vector <string> Players = { "Master", "Beginner" };
+
+private:
     string name;
     int score;
 };
 
-class Master : public Player {
+class Print : public Player {
 public:
-    Master() : Player("Master") {};
-};
 
-class Beginner : public Player {
-public:
-    Beginner() : Player("Beginner") {};
-};
+    Print(string m_name) : Player(m_name) {}
 
-class Darts {
-public:
-    Darts() {};
-    friend class PlayersTruck;
-    friend class Viewer;
-protected:
-    vector <Player*> Players;
-    int Score;
-};
-
-class PlayersTruck {
-public:
-    PlayersTruck() {};
-    void add(Player* Player, Darts* darts) {
-        darts->Players.push_back(Player);
-    }
-};
-
-class Viewer {
-public:
-    Viewer() {};
-    void print(Darts* darts) {
-        for (auto Player : darts->Players) {
-            cout << Player->name << endl;
+    void print(/*vector <string> &Players*/) {
+        cout << "Игроки: ";
+        for (vector<string>::iterator it = Players.begin(); it != Players.end(); ++it)
+        {
+            cout << *it << " ";
         }
+        cout << endl;
     }
 };
 
-class Play {
+
+class Add : public Player {
 public:
-    Play() {};
-    void DropDart(Player* player) {
-        player->score = rand() % 100;
-        cout << player->score;
+    Add(string player) :Player(player) {}
+
+    void addPlayer(string player) {
+        Players.push_back(player);
     }
+
 };
 
 int main() {
+    setlocale(LC_ALL, "RU");
     srand(time(0));
-    Darts Darts;
-    PlayersTruck truck;
-    Play play;
+    Print pr("Master");
+    Add add("Master");
+    Add add1("Beginner");
 
-    truck.add(new Master(), &Darts);
-    truck.add(new Master(), &Darts);
-    truck.add(new Beginner(), &Darts);
-
-    Viewer look;
-    look.print(&Darts);
-    play.DropDart(new Master());
+    pr.print();
 
 
     return 0;
