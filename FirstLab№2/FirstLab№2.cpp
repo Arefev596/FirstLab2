@@ -26,9 +26,9 @@ private:
 class Print : public Player {
 public:
 
-    Print(string m_name) : Player(m_name) {}
+    Print() {}
 
-    void print(/*vector <string> &Players*/) {
+    void print() {
         cout << "Игроки: ";
         for (vector<string>::iterator it = Players.begin(); it != Players.end(); ++it)
         {
@@ -41,10 +41,11 @@ public:
 
 class Add : public Player {
 public:
-    Add(string player) :Player(player) {}
+    Add() {}
 
     void addPlayer(string player) {
         Players.push_back(player);
+        cout << player << " добавлен в список! \n";
     }
 
 };
@@ -52,10 +53,11 @@ public:
 int main() {
     setlocale(LC_ALL, "RU");
     srand(time(0));
-    Print pr("Master");
-    Add add("Master");
-    Add add1("Beginner");
+    Print pr;
+    Add add;
 
+    add.addPlayer("Master");
+    add.addPlayer("Beginner");
     pr.print();
 
 
